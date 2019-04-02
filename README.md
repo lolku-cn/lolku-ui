@@ -1,9 +1,16 @@
+## 语言切换
+
+简体中文🇨🇳 | English | العربية | español
+
+
+
 # lolku-ui
 
 ### 此项目是个人开发制作 vue-ui 组件
 
 > 千万别乱用，bug出现，别怪我。
 
+### 动画
 
 
 MIT License
