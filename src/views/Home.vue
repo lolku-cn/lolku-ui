@@ -8,12 +8,8 @@
             v-for="(item,index) in tabData1" 
             :key="index" 
             @click.native="selectIndex=index"
-            :tab_options="{
-              shapeOf:'bump',
-              color:'',
-              background:'',
-              lineThickness:'',
-              radius:''
+            :lineConfig="{
+              
             }"
             >{{item.name}}</tab-item>
           </tab-box>
