@@ -14,7 +14,7 @@
 
 ### 动画
 
-[中文地址](https://www.animejs.cn/?_blank) or [英文地址](https://animejs.com/)
+[中文地址]([https://www.animejs.cn/]_blank) or [英文地址](https://animejs.com/)
 
 > 依赖了 animejs 小巧，非常的好用（个人推荐）
 
