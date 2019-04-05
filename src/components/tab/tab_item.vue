@@ -1,5 +1,5 @@
 <template>
-    <div :class="['item',activeIndex==itemIndex?'active':'',activeIndex==itemIndex?shapeOf:'']" :style="activeIndex==itemIndex?activeStyle:{}"  :itemIndex="itemIndex">
+    <div :class="['item',activeIndex==itemIndex?'active':'',activeIndex==itemIndex?shapeOf:'']" :style="activeIndex==itemIndex && !this.lineConfig?activeStyle:{}"  :itemIndex="itemIndex">
         <slot></slot>
     </div>
 </template>
@@ -12,7 +12,11 @@
             return {
                 activeIndex:null,
                 left:'',
-                activeStyle:{},
+                activeStyle:{
+                    background: "#14D2B8",
+                    color: "#fff",
+                    borderRadius: "20px",
+                },
                 shapeOf:''
             }
         },
@@ -108,9 +112,6 @@
         // position: absolute;
     }
     .active {
-        background: #14D2B8;
-        color: #fff;
-        border-radius: 20px;
         &.bump {
             border-radius: 12px 12px 0 0;
         }

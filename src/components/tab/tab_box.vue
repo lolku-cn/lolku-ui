@@ -14,7 +14,8 @@
     /**
      * @老程
      * ** 注意：****************************************************
-     * 1、在阿语中，offsetLeft 值与scrollLeft值是相反的，scrollLeft设置是从右到左习惯来的。
+     * 1、在阿语中，offsetLeft 值与scrollLeft值是相反的， scrollLeft 设置是从右到左习惯来的。
+     * 1.1、在阿语中，定位的left是还是原来的位置，还是 从右到左，直接拿着 scrollLeft 设置即可
      * 2、销毁此组件，如果当前有dom 插入到其他的外面的dom中，不会进行销毁，所以在销毁前弄回。
      * 3、默认每个子元素宽度都是自己撑的，如果想每个元素宽度都一致的话，就得在样式上面 /deep/ 来设置每个元素的大小宽度。
      * 4、置顶动画，可以在css中自行定义。
@@ -99,30 +100,26 @@
                 }else {
                     // 整体滚动动画
                     this.animeFn(flag,this.$refs.move,this.$children[index].$el.offsetLeft - this.width + (this.$children[index].$el.offsetWidth/2))
-                    // 线滚动动画 this.lineStyle
-                    anime({
-                        targets:this.$refs.line,
-                        left:this.$children[index].$el.offsetLeft - this.width + (this.$children[index].$el.offsetWidth/2),
-                        easing: 'linear',
-                        duration:flag?0:400
-                    })
+                    // 线滚动动画 
+                    
                 }
-                
+                // 如果线存在的话，则这么跑
+                if(!this.showLine) {
+                    return;
+                }
+                this.lineStyle.width = this.$children[index].$el.offsetWidth + 'px';
+                anime({
+                    targets:this.$refs.line,
+                    left:this.$children[index].$el.offsetLeft, //  - this.width + (this.$children[index].$el.offsetWidth/2)
+                    easing: 'linear',
+                    duration:flag?0:400
+                })
                 // log(this.$children.length - index)
                 // log(  );
                 // log(this.$el.scrollLeft)
             },
             // 当子组件通知此组件，子组件已经加载完成。可以滚动。
             updateParent(lineConfig){
-                this.width = (document.documentElement.clientWidth || document.body.clientWidth )/2;
-                this.$children[this.$props.des_index].updatedData(this.$props.des_index);
-                // 解决在阿语中最后一个没有被选中
-                setTimeout(()=>{
-                    this.move(this.$props.des_index);
-                },100)
-                if(this.$el.scrollWidth >= this.width*2) {
-                    this.spaceBetween = true;
-                }
                 // 子组件传递过来的线颜色
                 /**
                  *      linerWidth: '' // 线的宽度
@@ -134,7 +131,18 @@
                     this.lineStyle.background = lineConfig.lineColor || '#333';
                     this.lineStyle.height = lineConfig.linerWidth || '1px'
                     lineConfig.direction=='top'  ? this.lineStyle.top = 0 : this.lineStyle.bottom = 0; 
+                    this.lineStyle.width = this.$children[this.$props.des_index].$el.offsetWidth + 'px';
                 }
+                this.width = window.getComputedStyle(this.$el).width.split('px')[0]/2;
+                this.$children[this.$props.des_index].updatedData(this.$props.des_index);
+                // 解决在阿语中最后一个没有被选中
+                setTimeout(()=>{
+                    this.move(this.$props.des_index);
+                },100)
+                if(this.$el.scrollWidth >= this.width*2) {
+                    this.spaceBetween = true;
+                }
+                
             },
             // 合并动画部分
             animeFn(flag,obj,value){
@@ -207,7 +215,7 @@
             box-sizing: inherit;
         }
         .line {
-            width: 100px;
+            width: 0px;
             display: block;
             // width: ;
             position: absolute;

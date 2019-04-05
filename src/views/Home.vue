@@ -2,10 +2,14 @@
   <div class="home">
     <div class="scroll" @scroll="scroll" >
       <div class="main">
+        <!-- 
+          进入可视区域：https://blog.csdn.net/latency_cheng/article/details/84963435
+
+         -->
           <tab-box v-model="selectIndex" :placedTopSelect="placedTopSelect" >
             <tab-item 
-            :itemIndex="index" 
-            v-for="(item,index) in tabData1" 
+            :itemIndex="index"
+            v-for="(item,index) in tabData1"
             :key="index" 
             @click.native="selectIndex=index"
             :lineConfig="{
