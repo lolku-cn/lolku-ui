@@ -1,35 +1,19 @@
 <template>
   <div class="home">
-    <div class="scroll" @scroll="scroll" >
-      <div class="main">
-        <!-- 
-          进入可视区域：https://blog.csdn.net/latency_cheng/article/details/84963435
+    <lolkuScroll>
 
-         -->
-          <tab-box v-model="selectIndex" :placedTopSelect="placedTopSelect" >
-            <tab-item 
-            :itemIndex="index"
-            v-for="(item,index) in tabData1"
-            :key="index" 
-            @click.native="selectIndex=index"
-            :lineConfig="{
-              
-            }"
-            >{{item.name}}</tab-item>
-          </tab-box>
-      </div>
-    </div>
+    </lolkuScroll>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 // import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-import {tabBox,tabItem} from '@/components/tab/index'
+import lolkuScroll from '@/components/lolkuScroll/scroll.vue'
+console.log(lolkuScroll)
 @Component({
   components: {
-    tabBox,
-    tabItem
+    lolkuScroll
   }
 })
 export default class Home extends Vue {
