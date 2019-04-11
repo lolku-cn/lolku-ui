@@ -1,22 +1,23 @@
 <template>
   <div class="home">
-    <div class="scroll" @scroll="scroll" >
-      <div class="main">
-          <tab-box v-model="selectIndex" :placedTopSelect="placedTopSelect" >
-            <tab-item 
-            :itemIndex="index" 
-            v-for="(item,index) in tabData1" 
-            :key="index" 
-            @click.native="selectIndex=index"
-            :tab_options="{
-              shapeOf:'bump',
-              color:'',
-              background:'',
-              lineThickness:'',
-              radius:''
-            }"
-            >{{item.name}}</tab-item>
-          </tab-box>
+    <div class="group">
+      <div class="title">
+        导航类
+      </div>
+      <div class="group-main">
+        <div class="list" @click="groupList('/tab')">
+          Tab 标签页
+        </div>
+      </div>
+    </div>
+    <div class="group">
+      <div class="title">
+        基本组件
+      </div>
+      <div class="group-main">
+        <div class="list" @click="groupList('/tab')">
+          icon
+        </div>
       </div>
     </div>
   </div>
@@ -25,39 +26,19 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 // import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-import {tabBox,tabItem} from '@/components/tab/index'
+
 @Component({
   components: {
-    tabBox,
-    tabItem
   }
 })
 export default class Home extends Vue {
-  selectIndex : Number = 0;
-  tabData1: Object = [{
-    name:"首页"
-  },{
-    name:"美食"
-  },{
-    name:"天天学习"
-  },{
-    name:"电影"
-  },{
-    name:"逛街"
-  },{
-    name:"遛狗"
-  },{
-    name:"放假"
-  }];
-  placedTopSelect: Boolean = false;
-  // 滚动
-  public scroll (e:any){
-    e.target.scrollTop > 120 ? this.placedTopSelect = true: this.placedTopSelect = false;
-  }
   created(){
     // this.$nextTick()
     // this.scroll('');
     // console.log(3131)
+  }
+  public groupList (path:any) {
+    this.$router.push(path);
   }
 }
 </script>
@@ -69,6 +50,21 @@ export default class Home extends Vue {
   -webkit-overflow-scrolling: touch;
   .main {
     height: 1000px;
+  }
+}
+.home {
+  padding: 24px;
+  .group {
+    border: 1px solid #ececec;
+    padding: 6px 12px;
+    border-radius: 10px;
+    .title {
+      font-size: 16px;
+      padding-bottom: 7px;
+    }
+    .group-main {
+      font-size: 14px;
+    }
   }
 }
 </style>

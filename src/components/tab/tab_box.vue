@@ -56,7 +56,6 @@
         },
         mounted(){
             this.$nextTick(()=>{
-                console.log(this)
                 this.suckObj = this.$props.SuckTheTop || this.$parent.$el;
                 // 如果一进来就设置了置顶的话，那么这个就得置顶
                 if(this.placedTopSelect) {
