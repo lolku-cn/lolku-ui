@@ -17,6 +17,11 @@ export default new Router({
       path:'/navBar',
       name: "tabBar",
       component: () => import("./views/navbar.vue")
+    },
+    {
+      path: "/scroll",
+      name: "scroll",
+      component: () => import("./views/scroll.vue")
     }
   ]
 });
