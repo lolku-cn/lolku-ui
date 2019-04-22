@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-P="24">
     <div class="group">
       <div class="title">
         导航类
@@ -35,7 +35,7 @@ export default class Home extends Vue {
   created(){
     // this.$nextTick()
     // this.scroll('');
-    // console.log(3131)
+    console.log(this.lolku)
   }
   public groupList (path:any) {
     this.$router.push(path);
@@ -53,17 +53,17 @@ export default class Home extends Vue {
   }
 }
 .home {
-  padding: 24px;
+  // padding: 24px;
   .group {
     border: 1px solid #ececec;
-    padding: 6px 12px;
-    border-radius: 10px;
+    // padding: 6px 12px;
+    // border-radius: 10px;
     .title {
-      font-size: 16px;
-      padding-bottom: 7px;
+      // font-size: 16px;
+      // padding-bottom: 7px;
     }
     .group-main {
-      font-size: 14px;
+      // font-size: 14px;
     }
   }
 }

@@ -2,7 +2,11 @@
     <div class="rotation">
         <!-- 使用solt对应的法子，进行对应着。 -->
         <div v-for="(item,index) in itemNumber" :key="index" :class="['lists',index==activeClass?'active':'']">
-            <slot :name="index">{{'轨迹请根据索引值定义：'+index}}</slot>
+            <slot :name="index">
+                <!-- {{scenery.length!=0?scenery[index].smallImg:''}} -->
+                <img :src="item[config.img]" alt="">
+                <p>{{item[config.name]}}</p>
+            </slot>
         </div>
     </div>
 </template>
@@ -20,6 +24,7 @@
      * 2、如果是先获取抽取接口，在运动哪个位置，那么直接调用 stop 方法，传入旋转的时间。
      * 3、如果抽取机会有多次，那么就得重置下，在进行（情况1和情况2中）来跑
      */
+   
     export default {
         data(){
             return {
@@ -28,13 +33,16 @@
                 speedTime:0,
                 stopTimer:null,
                 num:0,
-                noTrajectory:false
+                noTrajectory:false,
+                selectIndex:0,
+                onruns:false,
             }
         },
         props:{
             // 用于告诉多少格子
             itemNumber:{
-                type:Number
+                type:[Number, Array],
+                required:true
             },
             /**
              * 用于轨迹
@@ -51,10 +59,21 @@
             speed:{
                 type:Number,
                 default:160
+            },
+            // 修改字段名称：
+            config:{
+                type:Object,
+                default(){
+                    return {
+                        img:'smallImg',
+                        name:'name'
+                    }
+                }
             }
         },
         created(){
             this.activeClass = this.$props.activeIndex;
+            this.selectIndex = this.activeClass;
             this.num = this.$props.activeIndex;
             this.speedTime = this.speed;
             // 判断是否没有轨迹，如果没有轨迹，那么就直接
@@ -67,13 +86,16 @@
             run(){
                 clearInterval(this.timer)
                 this.timer = setInterval(() => {
+                    this.onruns = true;
                     if(this.stopSelect) {
-                        if(this.activeClass == this.$props.activeIndex) {
+                        if(this.activeClass == this.selectIndex) {
+                            this.onruns = false;
                             /**
                              * @return {active,trajectoryIndex}
                              */
                             this.$emit('on-stop', {active:this.activeClass,trajectoryIndex:!this.noTrajectory?this.trajectory[this.activeClass]:this.num});
                             // this.activeClass = this.$props.activeIndex;
+                            clearInterval(this.timer)
                             return;
                         }
                     }
@@ -88,7 +110,7 @@
                 },this.speedTime);
             },
             // 停止跑,
-            stop(time = 200){
+            stop(time = 3000){
                 this.speedTime = this.speed;
                 clearTimeout(this.stopTimer);
                 // 由于更新了定时器时间，但是是不会再次更新的
@@ -107,6 +129,14 @@
                 this.stopSelect = false;
             }
         },
+        watch:{
+            activeIndex(to){
+                this.selectIndex = to;
+                if(!this.onruns){
+                    this.activeClass = to;
+                }
+            }
+        },
         beforeDestroy(){
             clearInterval(this.timer);
             clearTimeout(this.stopTimer);
@@ -121,6 +151,10 @@
         width: 33.333333333333336%;
         height: 120px;
         text-align: center;
+        padding: 6px;
+        img {
+            width: 100%;
+        }
         &.active {
             background: aqua;
         }

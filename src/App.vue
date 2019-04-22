@@ -7,7 +7,7 @@
 </template>
 
 <style lang="less">
-html,body {
+html,body,p,li,ul,ol {
   margin: 0;
   padding: 0;
 }
